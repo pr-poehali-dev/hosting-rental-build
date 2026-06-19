@@ -13,7 +13,7 @@
     --popover: 230 30% 8%;
     --popover-foreground: 200 20% 92%;
 
-    --primary: 183 100% 50%;
+    --primary: 270 95% 65%;
     --primary-foreground: 230 35% 5%;
 
     --secondary: 230 25% 14%;
@@ -22,7 +22,7 @@
     --muted: 230 20% 14%;
     --muted-foreground: 215 15% 55%;
 
-    --accent: 315 100% 60%;
+    --accent: 320 100% 62%;
     --accent-foreground: 230 35% 5%;
 
     --destructive: 0 84% 60%;
@@ -30,21 +30,21 @@
 
     --border: 230 25% 16%;
     --input: 230 25% 16%;
-    --ring: 183 100% 50%;
+    --ring: 270 95% 65%;
 
     --radius: 0.75rem;
 
-    --neon-cyan: 183 100% 50%;
-    --neon-magenta: 315 100% 60%;
+    --neon-cyan: 270 95% 65%;
+    --neon-magenta: 320 100% 62%;
 
     --sidebar-background: 230 30% 8%;
     --sidebar-foreground: 200 20% 92%;
-    --sidebar-primary: 183 100% 50%;
+    --sidebar-primary: 270 95% 65%;
     --sidebar-primary-foreground: 230 35% 5%;
     --sidebar-accent: 230 25% 14%;
     --sidebar-accent-foreground: 200 20% 92%;
     --sidebar-border: 230 25% 16%;
-    --sidebar-ring: 183 100% 50%;
+    --sidebar-ring: 270 95% 65%;
   }
 }
 
@@ -59,12 +59,12 @@
     background-image:
       radial-gradient(
         circle at 15% 15%,
-        hsl(183 100% 50% / 0.08),
+        hsl(270 95% 65% / 0.1),
         transparent 40%
       ),
       radial-gradient(
         circle at 85% 85%,
-        hsl(315 100% 60% / 0.08),
+        hsl(320 100% 62% / 0.1),
         transparent 40%
       );
     background-attachment: fixed;
@@ -85,8 +85,8 @@
 @layer utilities {
   .grid-bg {
     background-image:
-      linear-gradient(hsl(183 100% 50% / 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(183 100% 50% / 0.06) 1px, transparent 1px);
+      linear-gradient(hsl(270 95% 65% / 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(270 95% 65% / 0.07) 1px, transparent 1px);
     background-size: 44px 44px;
   }
 
@@ -99,27 +99,27 @@
 
   .glow-cyan {
     box-shadow:
-      0 0 20px hsl(183 100% 50% / 0.4),
-      0 0 60px hsl(183 100% 50% / 0.15);
+      0 0 20px hsl(270 95% 65% / 0.45),
+      0 0 60px hsl(270 95% 65% / 0.18);
   }
   .glow-magenta {
     box-shadow:
-      0 0 20px hsl(315 100% 60% / 0.4),
-      0 0 60px hsl(315 100% 60% / 0.15);
+      0 0 20px hsl(320 100% 62% / 0.45),
+      0 0 60px hsl(320 100% 62% / 0.18);
   }
   .text-glow-cyan {
-    text-shadow: 0 0 14px hsl(183 100% 50% / 0.7);
+    text-shadow: 0 0 14px hsl(270 95% 65% / 0.7);
   }
   .text-glow-magenta {
-    text-shadow: 0 0 14px hsl(315 100% 60% / 0.7);
+    text-shadow: 0 0 14px hsl(320 100% 62% / 0.7);
   }
 
   .border-glow {
-    border: 1px solid hsl(183 100% 50% / 0.3);
+    border: 1px solid hsl(270 95% 65% / 0.35);
   }
 
   .gradient-text {
-    background: linear-gradient(90deg, hsl(183 100% 50%), hsl(315 100% 60%));
+    background: linear-gradient(90deg, hsl(270 95% 65%), hsl(320 100% 62%));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -132,9 +132,9 @@
     transition: all 0.3s ease;
   }
   .card-tech:hover {
-    border-color: hsl(183 100% 50% / 0.5);
+    border-color: hsl(270 95% 65% / 0.5);
     transform: translateY(-4px);
-    box-shadow: 0 10px 40px hsl(183 100% 50% / 0.12);
+    box-shadow: 0 10px 40px hsl(270 95% 65% / 0.14);
   }
 
   .scanline::before {
@@ -145,8 +145,8 @@
       to bottom,
       transparent,
       transparent 2px,
-      hsl(183 100% 50% / 0.02) 3px,
-      hsl(183 100% 50% / 0.02) 4px
+      hsl(270 95% 65% / 0.02) 3px,
+      hsl(270 95% 65% / 0.02) 4px
     );
     pointer-events: none;
   }

@@ -75,7 +75,7 @@ const Index = () => {
         <div className="container flex items-center justify-between h-16">
           <a href="#" className="flex items-center gap-2 font-display font-black text-xl tracking-widest">
             <Icon name="Hexagon" className="text-neon-cyan text-glow-cyan" size={26} />
-            <span className="gradient-text">NEXUS</span>
+            <span className="gradient-text">Артель NA</span>
           </a>
           <nav className="hidden md:flex items-center gap-8 text-sm font-mono text-muted-foreground">
             {NAV.map((n) => (
@@ -265,7 +265,7 @@ const Index = () => {
         <div className="grid md:grid-cols-3 gap-5 mt-12">
           {[
             { icon: 'Phone', label: 'Телефон', value: '+7 (800) 555-00-42' },
-            { icon: 'Mail', label: 'Почта', value: 'hello@nexus.ru' },
+            { icon: 'Mail', label: 'Почта', value: 'hello@na40.ru' },
             { icon: 'MapPin', label: 'Дата-центр', value: 'Москва, ул. Серверная, 1' },
           ].map((c) => (
             <div key={c.label} className="card-tech rounded-xl p-6 flex items-center gap-4">
@@ -286,9 +286,9 @@ const Index = () => {
         <div className="container flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 font-display font-black tracking-widest">
             <Icon name="Hexagon" className="text-neon-cyan" size={20} />
-            <span className="gradient-text">NEXUS</span>
+            <span className="gradient-text">Артель NA</span>
           </div>
-          <p className="text-xs font-mono text-muted-foreground">© 2026 NEXUS · Мощности будущего</p>
+          <p className="text-xs font-mono text-muted-foreground">© 2026 Артель NA · Мощности будущего</p>
         </div>
       </footer>
     </div>
