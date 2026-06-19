@@ -7,6 +7,7 @@ export default {
 		"./components/**/*.{ts,tsx}",
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
+			"./1781908716905340232.html"
 	],
 	prefix: "",
 	theme: {
@@ -18,7 +19,16 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				display: ['Orbitron', 'sans-serif'],
+				body: ['Rubik', 'sans-serif'],
+				mono: ['JetBrains Mono', 'monospace'],
+			},
 			colors: {
+				neon: {
+					cyan: 'hsl(var(--neon-cyan))',
+					magenta: 'hsl(var(--neon-magenta))',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
