@@ -70,6 +70,68 @@ const PC_BUILDS = [
   },
 ];
 
+export type NewsItem = {
+  id: number;
+  tag: string;
+  date: string;
+  title: string;
+  excerpt: string;
+  body: string;
+};
+
+export const ALL_NEWS: NewsItem[] = [
+  {
+    id: 1,
+    tag: 'Новость',
+    date: '25 июня 2026',
+    title: 'Запуск нового тарифа «Ангара 2.0» с 8 vCPU',
+    excerpt: 'Мы расширяем линейку VPS-тарифов: встречайте «Ангара 2.0» — 8 ядер, 12 ГБ ОЗУ и выбор накопителя.',
+    body: 'Подробное описание тарифа «Ангара 2.0». Тариф предназначен для высоконагруженных приложений, баз данных и веб-серверов с большим трафиком. Доступны накопители HDD, SSD и NVMe. Канал до 100 Мбит/с и IP-адрес включены в стоимость.',
+  },
+  {
+    id: 2,
+    tag: 'Акция',
+    date: '20 июня 2026',
+    title: 'Скидка 20% на все VPS при оплате за 6 месяцев',
+    excerpt: 'До 31 июля действует специальное предложение: оплатите любой VPS-тариф на 6 месяцев вперёд и получите скидку 20%.',
+    body: 'Акция распространяется на все VPS-тарифы линейки 2.0. Скидка применяется автоматически при выборе периода 6 месяцев в панели управления. Предложение действует до 31 июля 2026 года.',
+  },
+  {
+    id: 3,
+    tag: 'Обновление',
+    date: '15 июня 2026',
+    title: 'Обновление панели управления: новый интерфейс и быстрый перезапуск',
+    excerpt: 'Мы обновили панель управления серверами. Ребут теперь занимает менее 10 секунд, добавлены графики нагрузки в реальном времени.',
+    body: 'В новой версии панели управления реализованы: мгновенный перезапуск сервера (менее 10 сек), графики CPU/RAM/Disk в реальном времени, поддержка двухфакторной аутентификации, улучшенный мобильный интерфейс.',
+  },
+  {
+    id: 4,
+    tag: 'Новость',
+    date: '10 июня 2026',
+    title: 'Добавлен выделенный сервер «Циолковский» на AMD Ryzen 9 5950X',
+    excerpt: 'В каталог выделенных серверов добавлена новая позиция — 16-ядерный AMD Ryzen 9 5950X с 128 ГБ ОЗУ и 1 ТБ NVMe.',
+    body: 'Выделенный сервер «Циолковский» — наше флагманское предложение для задач, требующих максимальной производительности. Идеально подходит для ML-обучения, рендеринга, тяжёлых баз данных и высоконагруженных сервисов.',
+  },
+  {
+    id: 5,
+    tag: 'Обновление',
+    date: '5 июня 2026',
+    title: 'Техническое обслуживание 8 июня с 03:00 до 05:00 МСК',
+    excerpt: 'Уведомляем о плановых технических работах. Возможны кратковременные перебои в работе отдельных серверов.',
+    body: 'Плановое техническое обслуживание инфраструктуры пройдёт 8 июня с 03:00 до 05:00 МСК. В это время возможны кратковременные перебои. Все данные будут сохранены. Следите за оперативными обновлениями в нашем Telegram-канале.',
+  },
+  {
+    id: 6,
+    tag: 'Акция',
+    date: '1 июня 2026',
+    title: 'Бесплатная сборка ПК при заказе выделенного сервера',
+    excerpt: 'Специальное предложение для новых клиентов: закажите выделенный сервер и получите бесплатную консультацию по сборке рабочей станции.',
+    body: 'При заключении договора на аренду выделенного сервера сроком от 3 месяцев новые клиенты получают бесплатную консультацию по подбору и сборке рабочей станции. Предложение действует до конца июня 2026.',
+  },
+];
+
+const NEWS_PREVIEW = ALL_NEWS.slice(0, 3);
+
 const Index = () => {
   const [storageType, setStorageType] = useState<StorageType>('HDD');
 
@@ -307,76 +369,53 @@ const Index = () => {
         </div>
       </section>
 
-      {/* News / Blog */}
+      {/* Blog */}
       <section id="blog" className="container py-24">
-        <SectionTitle tag="// БЛОГ" title="Срочные новости и обновления" />
+        <SectionTitle tag="// БЛОГ" title="Новости Артели" />
         <p className="text-center text-muted-foreground max-w-xl mx-auto mt-4 mb-12">
-          Следите за новостями платформы, акциями и техническими обновлениями в наших сообществах.
+          Обновления платформы, акции и полезные статьи об оборудовании.
         </p>
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Telegram */}
-          <a
-            href="https://t.me/artel_na"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="card-tech rounded-2xl p-8 flex items-center gap-6 group hover:border-neon-cyan/60 transition-all"
-          >
-            <div className="w-16 h-16 rounded-2xl bg-neon-cyan/10 border border-neon-cyan/25 flex items-center justify-center shrink-0 group-hover:glow-cyan transition-all text-2xl">
-              ✈️
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="font-mono text-xs text-neon-cyan uppercase tracking-widest mb-1">Telegram</div>
-              <h3 className="font-display font-bold text-lg mb-1">Канал Артель NA</h3>
-              <p className="text-sm text-muted-foreground">Срочные новости, плановые работы, акции и анонсы новых услуг — первыми узнают подписчики.</p>
-              <div className="flex items-center gap-1 mt-3 text-neon-cyan text-xs font-mono">
-                Подписаться <Icon name="ArrowRight" size={14} className="group-hover:translate-x-1 transition-transform" />
+        <div className="grid md:grid-cols-3 gap-5">
+          {NEWS_PREVIEW.map((n, i) => (
+            <div key={n.id} className="card-tech rounded-2xl overflow-hidden flex flex-col animate-float-up" style={{ animationDelay: `${i * 0.08}s` }}>
+              <div className={`h-1.5 w-full ${n.tag === 'Новость' ? 'bg-neon-cyan' : n.tag === 'Акция' ? 'bg-neon-magenta' : 'bg-neon-cyan/50'}`} />
+              <div className="p-6 flex flex-col flex-1">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className={`text-xs font-mono px-2 py-0.5 rounded border ${
+                    n.tag === 'Акция'
+                      ? 'border-neon-magenta/40 text-neon-magenta bg-neon-magenta/5'
+                      : 'border-neon-cyan/40 text-neon-cyan bg-neon-cyan/5'
+                  }`}>{n.tag}</span>
+                  <span className="text-xs text-muted-foreground font-mono">{n.date}</span>
+                </div>
+                <h3 className="font-display font-bold text-base mb-2 leading-snug">{n.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed flex-1">{n.excerpt}</p>
+                <button className="flex items-center gap-1 text-xs font-mono text-neon-cyan mt-4 hover:gap-2 transition-all">
+                  Читать далее <Icon name="ArrowRight" size={13} />
+                </button>
               </div>
             </div>
-          </a>
-
-          {/* VK */}
-          <a
-            href="https://vk.com/artel_na"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="card-tech rounded-2xl p-8 flex items-center gap-6 group hover:border-neon-magenta/60 transition-all"
-          >
-            <div className="w-16 h-16 rounded-2xl bg-neon-magenta/10 border border-neon-magenta/25 flex items-center justify-center shrink-0 group-hover:glow-magenta transition-all text-2xl">
-              🔵
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="font-mono text-xs text-neon-magenta uppercase tracking-widest mb-1">ВКонтакте</div>
-              <h3 className="font-display font-bold text-lg mb-1">Сообщество Артель NA</h3>
-              <p className="text-sm text-muted-foreground">Статьи, обзоры конфигураций, кейсы клиентов и полезные гайды по выбору оборудования.</p>
-              <div className="flex items-center gap-1 mt-3 text-neon-magenta text-xs font-mono">
-                Вступить <Icon name="ArrowRight" size={14} className="group-hover:translate-x-1 transition-transform" />
-              </div>
-            </div>
-          </a>
+          ))}
         </div>
-
-        {/* Breaking news banner */}
-        <div className="mt-6 card-tech rounded-xl px-6 py-4 flex items-center gap-4 border-neon-cyan/20">
-          <span className="flex items-center gap-2 shrink-0">
-            <span className="w-2 h-2 rounded-full bg-neon-cyan animate-pulse-glow" />
-            <span className="font-mono text-xs text-neon-cyan uppercase tracking-widest">Срочно</span>
-          </span>
-          <p className="text-sm text-muted-foreground truncate">
-            Подписывайтесь на наши каналы — о плановых работах и аварийных ситуациях сообщаем там в первую очередь.
-          </p>
+        <div className="text-center mt-10">
+          <a href="/blog">
+            <Button variant="outline" className="border-neon-cyan/40 text-neon-cyan hover:bg-neon-cyan/10 font-mono font-bold px-8">
+              <Icon name="Newspaper" size={16} className="mr-2" />Все новости
+            </Button>
+          </a>
         </div>
       </section>
 
       {/* Contacts */}
       <section id="contacts" className="container py-24">
         <SectionTitle tag="// КОНТАКТЫ" title="Связаться с нами" />
-        <div className="grid md:grid-cols-3 gap-5 mt-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
           {[
-            { icon: 'Phone', label: 'Телефон', value: '+7 (800) 555-00-42' },
-            { icon: 'Mail', label: 'Почта', value: 'hello@na40.ru' },
-            { icon: 'MapPin', label: 'Дата-центр', value: 'Москва, ул. Серверная, 1' },
+            { icon: 'Phone', label: 'Телефон', value: '+7 (800) 555-00-42', href: 'tel:+78005550042', accent: 'cyan' },
+            { icon: 'Mail', label: 'Почта', value: 'hello@na40.ru', href: 'mailto:hello@na40.ru', accent: 'cyan' },
+            { icon: 'MapPin', label: 'Дата-центр', value: 'Москва, ул. Серверная, 1', href: '#', accent: 'cyan' },
           ].map((c) => (
-            <div key={c.label} className="card-tech rounded-xl p-6 flex items-center gap-4">
+            <a key={c.label} href={c.href} className="card-tech rounded-xl p-6 flex items-center gap-4 hover:border-neon-cyan/50 transition-all">
               <div className="w-11 h-11 rounded-lg bg-neon-cyan/10 flex items-center justify-center border border-neon-cyan/20 shrink-0">
                 <Icon name={c.icon} className="text-neon-cyan" size={20} />
               </div>
@@ -384,8 +423,32 @@ const Index = () => {
                 <div className="text-xs font-mono text-muted-foreground uppercase">{c.label}</div>
                 <div className="font-medium">{c.value}</div>
               </div>
-            </div>
+            </a>
           ))}
+        </div>
+
+        {/* Social */}
+        <div className="grid md:grid-cols-2 gap-5 mt-5">
+          <a href="https://t.me/artel_na" target="_blank" rel="noopener noreferrer"
+            className="card-tech rounded-xl p-6 flex items-center gap-4 hover:border-neon-cyan/50 group transition-all">
+            <div className="w-11 h-11 rounded-lg bg-neon-cyan/10 border border-neon-cyan/20 flex items-center justify-center shrink-0 text-xl">✈️</div>
+            <div className="flex-1 min-w-0">
+              <div className="text-xs font-mono text-muted-foreground uppercase">Telegram</div>
+              <div className="font-medium">Канал Артель NA</div>
+              <div className="text-xs text-muted-foreground mt-0.5">Срочные новости и плановые работы</div>
+            </div>
+            <Icon name="ArrowRight" size={16} className="text-muted-foreground group-hover:text-neon-cyan group-hover:translate-x-1 transition-all shrink-0" />
+          </a>
+          <a href="https://vk.com/artel_na" target="_blank" rel="noopener noreferrer"
+            className="card-tech rounded-xl p-6 flex items-center gap-4 hover:border-neon-magenta/50 group transition-all">
+            <div className="w-11 h-11 rounded-lg bg-neon-magenta/10 border border-neon-magenta/20 flex items-center justify-center shrink-0 text-xl">🔵</div>
+            <div className="flex-1 min-w-0">
+              <div className="text-xs font-mono text-muted-foreground uppercase">ВКонтакте</div>
+              <div className="font-medium">Сообщество Артель NA</div>
+              <div className="text-xs text-muted-foreground mt-0.5">Статьи, обзоры и полезные гайды</div>
+            </div>
+            <Icon name="ArrowRight" size={16} className="text-muted-foreground group-hover:text-neon-magenta group-hover:translate-x-1 transition-all shrink-0" />
+          </a>
         </div>
       </section>
 
