@@ -75,7 +75,7 @@ const Index = () => {
         <div className="container flex items-center justify-between h-16">
           <a href="#" className="flex items-center gap-2 font-display font-black text-xl tracking-widest">
             <Icon name="Hexagon" className="text-neon-cyan text-glow-cyan" size={26} />
-            <span className="gradient-text">Артель NA</span>
+            <span className="gradient-text">Артель [N|A]</span>
           </a>
           <nav className="hidden md:flex items-center gap-8 text-sm font-mono text-muted-foreground">
             {NAV.map((n) => (
@@ -286,9 +286,9 @@ const Index = () => {
         <div className="container flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2 font-display font-black tracking-widest">
             <Icon name="Hexagon" className="text-neon-cyan" size={20} />
-            <span className="gradient-text">Артель NA</span>
+            <span className="gradient-text">Артель [N|A]</span>
           </div>
-          <p className="text-xs font-mono text-muted-foreground">© 2026 Артель NA · Мощности будущего</p>
+          <p className="text-xs font-mono text-muted-foreground">© 2026 Артель [N|A] · Мощности будущего</p>
         </div>
       </footer>
     </div>
