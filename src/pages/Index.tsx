@@ -7,6 +7,7 @@ const NAV = [
   { label: 'Тарифы', href: '#pricing' },
   { label: 'Калькулятор', href: '#calc' },
   { label: 'Поддержка', href: '#support' },
+  { label: 'Блог', href: '#blog' },
   { label: 'Контакты', href: '#contacts' },
 ];
 
@@ -303,6 +304,66 @@ const Index = () => {
               </Button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* News / Blog */}
+      <section id="blog" className="container py-24">
+        <SectionTitle tag="// БЛОГ" title="Срочные новости и обновления" />
+        <p className="text-center text-muted-foreground max-w-xl mx-auto mt-4 mb-12">
+          Следите за новостями платформы, акциями и техническими обновлениями в наших сообществах.
+        </p>
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Telegram */}
+          <a
+            href="https://t.me/artel_na"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="card-tech rounded-2xl p-8 flex items-center gap-6 group hover:border-neon-cyan/60 transition-all"
+          >
+            <div className="w-16 h-16 rounded-2xl bg-neon-cyan/10 border border-neon-cyan/25 flex items-center justify-center shrink-0 group-hover:glow-cyan transition-all text-2xl">
+              ✈️
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="font-mono text-xs text-neon-cyan uppercase tracking-widest mb-1">Telegram</div>
+              <h3 className="font-display font-bold text-lg mb-1">Канал Артель NA</h3>
+              <p className="text-sm text-muted-foreground">Срочные новости, плановые работы, акции и анонсы новых услуг — первыми узнают подписчики.</p>
+              <div className="flex items-center gap-1 mt-3 text-neon-cyan text-xs font-mono">
+                Подписаться <Icon name="ArrowRight" size={14} className="group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </a>
+
+          {/* VK */}
+          <a
+            href="https://vk.com/artel_na"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="card-tech rounded-2xl p-8 flex items-center gap-6 group hover:border-neon-magenta/60 transition-all"
+          >
+            <div className="w-16 h-16 rounded-2xl bg-neon-magenta/10 border border-neon-magenta/25 flex items-center justify-center shrink-0 group-hover:glow-magenta transition-all text-2xl">
+              🔵
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="font-mono text-xs text-neon-magenta uppercase tracking-widest mb-1">ВКонтакте</div>
+              <h3 className="font-display font-bold text-lg mb-1">Сообщество Артель NA</h3>
+              <p className="text-sm text-muted-foreground">Статьи, обзоры конфигураций, кейсы клиентов и полезные гайды по выбору оборудования.</p>
+              <div className="flex items-center gap-1 mt-3 text-neon-magenta text-xs font-mono">
+                Вступить <Icon name="ArrowRight" size={14} className="group-hover:translate-x-1 transition-transform" />
+              </div>
+            </div>
+          </a>
+        </div>
+
+        {/* Breaking news banner */}
+        <div className="mt-6 card-tech rounded-xl px-6 py-4 flex items-center gap-4 border-neon-cyan/20">
+          <span className="flex items-center gap-2 shrink-0">
+            <span className="w-2 h-2 rounded-full bg-neon-cyan animate-pulse-glow" />
+            <span className="font-mono text-xs text-neon-cyan uppercase tracking-widest">Срочно</span>
+          </span>
+          <p className="text-sm text-muted-foreground truncate">
+            Подписывайтесь на наши каналы — о плановых работах и аварийных ситуациях сообщаем там в первую очередь.
+          </p>
         </div>
       </section>
 
