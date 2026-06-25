@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 
@@ -38,51 +38,39 @@ const DEDICATED_PLANS = [
   { name: '«Циолковский»', cpu: 'AMD Ryzen 9 5950X', cores: '16 CPU', ram: '128 Гб ОЗУ', storage: '1000 Гб NVMe', price: 11000 },
 ];
 
-type Part = { id: string; name: string; price: number };
-type Category = { key: string; label: string; icon: string; options: Part[] };
-
-const CATEGORIES: Category[] = [
-  { key: 'cpu', label: 'Процессор', icon: 'Cpu', options: [
-    { id: 'cpu1', name: 'Ryzen 5 7600', price: 18000 },
-    { id: 'cpu2', name: 'Ryzen 7 7800X3D', price: 38000 },
-    { id: 'cpu3', name: 'Core i9-14900K', price: 52000 },
-  ]},
-  { key: 'gpu', label: 'Видеокарта', icon: 'MonitorPlay', options: [
-    { id: 'gpu1', name: 'RTX 4060 Ti', price: 42000 },
-    { id: 'gpu2', name: 'RTX 4080 Super', price: 105000 },
-    { id: 'gpu3', name: 'RTX 4090', price: 185000 },
-  ]},
-  { key: 'ram', label: 'Память', icon: 'MemoryStick', options: [
-    { id: 'ram1', name: '32 GB DDR5', price: 11000 },
-    { id: 'ram2', name: '64 GB DDR5', price: 22000 },
-    { id: 'ram3', name: '128 GB DDR5', price: 46000 },
-  ]},
-  { key: 'storage', label: 'Накопитель', icon: 'HardDrive', options: [
-    { id: 'st1', name: '1 TB NVMe', price: 9000 },
-    { id: 'st2', name: '2 TB NVMe Gen4', price: 18000 },
-    { id: 'st3', name: '4 TB NVMe Gen5', price: 39000 },
-  ]},
-  { key: 'cooling', label: 'Охлаждение', icon: 'Fan', options: [
-    { id: 'cl1', name: 'Башенный кулер', price: 5000 },
-    { id: 'cl2', name: 'СЖО 240 мм', price: 12000 },
-    { id: 'cl3', name: 'СЖО 360 мм', price: 19000 },
-  ]},
+const PC_BUILDS = [
+  {
+    icon: 'Gamepad2',
+    title: 'Игровая сборка',
+    desc: 'Максимальный FPS в любых играх. Подбираем баланс процессора, видеокарты и охлаждения под ваш бюджет и монитор.',
+    tags: ['Высокий FPS', 'RTX / RX', 'RGB-подсветка'],
+    accent: 'cyan',
+  },
+  {
+    icon: 'Monitor',
+    title: 'Офисная сборка',
+    desc: 'Надёжный и тихий ПК для работы с документами, браузером и видеозвонками. Без лишних затрат.',
+    tags: ['Тихий корпус', 'Энергоэффективность', 'Долгий ресурс'],
+    accent: 'magenta',
+  },
+  {
+    icon: 'BrainCircuit',
+    title: 'Профессиональные решения',
+    desc: '3D-рендер, монтаж видео, машинное обучение, архитектурные визуализации. Рабочие станции с GPU до RTX 4090.',
+    tags: ['Рендер / ML', 'ECC-память', 'Мощные GPU'],
+    accent: 'cyan',
+  },
+  {
+    icon: 'ServerCog',
+    title: 'Серверные решения',
+    desc: 'Домашние и корпоративные серверы, NAS-системы, файловые хранилища и инфраструктура для бизнеса.',
+    tags: ['RAID-массивы', 'NAS / HPC', 'Удалённый доступ'],
+    accent: 'magenta',
+  },
 ];
 
 const Index = () => {
   const [storageType, setStorageType] = useState<StorageType>('HDD');
-  const [selected, setSelected] = useState<Record<string, string>>(
-    Object.fromEntries(CATEGORIES.map((c) => [c.key, c.options[0].id]))
-  );
-
-  const total = useMemo(() => {
-    return CATEGORIES.reduce((sum, cat) => {
-      const part = cat.options.find((o) => o.id === selected[cat.key]);
-      return sum + (part?.price || 0);
-    }, 0);
-  }, [selected]);
-
-  const fmt = (n: number) => n.toLocaleString('ru-RU');
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -239,66 +227,59 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Calculator */}
+      {/* PC Builds */}
       <section id="calc" className="py-24 grid-bg relative scanline">
         <div className="container relative">
-          <SectionTitle tag="// КОНФИГУРАТОР" title="Калькулятор сборки ПК" />
-          <div className="grid lg:grid-cols-3 gap-6 mt-12">
-            <div className="lg:col-span-2 space-y-4">
-              {CATEGORIES.map((cat, ci) => (
-                <div key={cat.key} className="card-tech rounded-xl p-5 animate-float-up" style={{ animationDelay: `${ci * 0.06}s` }}>
-                  <div className="flex items-center gap-2 mb-4">
-                    <Icon name={cat.icon} className="text-neon-cyan" size={18} />
-                    <span className="font-display text-sm font-bold uppercase tracking-wide">{cat.label}</span>
-                  </div>
-                  <div className="grid sm:grid-cols-3 gap-3">
-                    {cat.options.map((opt) => {
-                      const active = selected[cat.key] === opt.id;
-                      return (
-                        <button
-                          key={opt.id}
-                          onClick={() => setSelected((s) => ({ ...s, [cat.key]: opt.id }))}
-                          className={`text-left rounded-lg p-3 border transition-all ${
-                            active
-                              ? 'border-neon-cyan bg-neon-cyan/10 glow-cyan'
-                              : 'border-border bg-secondary/40 hover:border-neon-cyan/40'
-                          }`}
-                        >
-                          <div className="text-sm font-medium mb-1">{opt.name}</div>
-                          <div className={`font-mono text-xs ${active ? 'text-neon-cyan' : 'text-muted-foreground'}`}>
-                            {fmt(opt.price)} ₽
-                          </div>
-                        </button>
-                      );
-                    })}
+          <SectionTitle tag="// СБОРКА ПК" title="Соберём под ваши задачи" />
+          <p className="text-center text-muted-foreground max-w-xl mx-auto mt-4 mb-12">
+            Оставьте заявку — подберём оптимальную конфигурацию под бюджет и задачи. Сборка и тестирование 2–4 дня.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-5">
+            {PC_BUILDS.map((b, i) => (
+              <div
+                key={b.title}
+                className="card-tech rounded-2xl p-7 flex gap-5 animate-float-up"
+                style={{ animationDelay: `${i * 0.08}s` }}
+              >
+                <div className={`w-14 h-14 rounded-xl flex items-center justify-center shrink-0 border ${
+                  b.accent === 'cyan'
+                    ? 'bg-neon-cyan/10 border-neon-cyan/25'
+                    : 'bg-neon-magenta/10 border-neon-magenta/25'
+                }`}>
+                  <Icon name={b.icon} size={28} className={b.accent === 'cyan' ? 'text-neon-cyan' : 'text-neon-magenta'} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className={`font-display font-bold text-base mb-2 ${b.accent === 'cyan' ? 'text-neon-cyan' : 'text-neon-magenta'}`}>
+                    {b.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">{b.desc}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {b.tags.map((tag) => (
+                      <span key={tag} className={`text-xs font-mono px-2 py-0.5 rounded border ${
+                        b.accent === 'cyan'
+                          ? 'border-neon-cyan/30 text-neon-cyan/80 bg-neon-cyan/5'
+                          : 'border-neon-magenta/30 text-neon-magenta/80 bg-neon-magenta/5'
+                      }`}>
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
-              ))}
-            </div>
-
-            {/* Total */}
-            <div className="lg:sticky lg:top-24 h-fit">
-              <div className="card-tech rounded-2xl p-7 border-neon-magenta/40">
-                <div className="font-mono text-xs text-muted-foreground uppercase tracking-widest mb-2">Итого конфигурация</div>
-                <div className="font-display font-black text-5xl gradient-text mb-1">{fmt(total)}</div>
-                <div className="font-mono text-sm text-muted-foreground mb-6">рублей</div>
-                <div className="space-y-2 mb-6 border-t border-border pt-4">
-                  {CATEGORIES.map((cat) => {
-                    const part = cat.options.find((o) => o.id === selected[cat.key]);
-                    return (
-                      <div key={cat.key} className="flex justify-between text-xs">
-                        <span className="text-muted-foreground">{part?.name}</span>
-                        <span className="font-mono">{fmt(part?.price || 0)} ₽</span>
-                      </div>
-                    );
-                  })}
-                </div>
-                <Button className="w-full bg-neon-cyan text-background hover:bg-neon-cyan/90 font-mono font-bold glow-cyan h-12 mb-3">
-                  <Icon name="ShoppingCart" size={18} className="mr-2" />Заказать сборку
-                </Button>
-                <p className="text-xs text-muted-foreground text-center">Сборка и тестирование 2–4 дня</p>
               </div>
-            </div>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="mt-12 card-tech rounded-2xl p-8 md:p-12 text-center border-neon-cyan/30">
+            <Icon name="PcCase" size={44} className="text-neon-cyan text-glow-cyan mx-auto mb-5" />
+            <h3 className="font-display font-black text-2xl md:text-3xl mb-3">Готовы обсудить вашу сборку?</h3>
+            <p className="text-muted-foreground mb-7 max-w-md mx-auto">
+              Расскажите о задачах и бюджете — рассчитаем стоимость и предложим оптимальную конфигурацию.
+            </p>
+            <Button size="lg" className="bg-neon-cyan text-background hover:bg-neon-cyan/90 font-mono font-bold glow-cyan h-12 px-10">
+              <Icon name="Send" size={18} className="mr-2" />Оставить заявку
+            </Button>
+            <p className="text-xs text-muted-foreground mt-4 font-mono">Ответим в течение 2 часов</p>
           </div>
         </div>
       </section>
