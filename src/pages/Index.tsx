@@ -17,10 +17,25 @@ const SERVICES = [
   { icon: 'Headphones', title: 'Техподдержка 24/7', desc: 'Реагируем за минуты. Мониторинг, диагностика и удалённая помощь круглосуточно.' },
 ];
 
-const PRICING = [
-  { name: 'START', price: '1 490', accent: 'cyan', features: ['4 vCPU / 8 GB RAM', '120 GB NVMe', '1 Гбит/с канал', 'Поддержка по тикетам'], popular: false },
-  { name: 'PRO', price: '4 990', accent: 'magenta', features: ['16 vCPU / 32 GB RAM', '500 GB NVMe', '10 Гбит/с канал', 'GPU по запросу', 'Поддержка 24/7'], popular: true },
-  { name: 'ENTERPRISE', price: '12 900', accent: 'cyan', features: ['64 vCPU / 128 GB RAM', '2 TB NVMe RAID', 'Выделенный GPU-кластер', 'Персональный инженер', 'SLA 99.99%'], popular: false },
+type StorageType = 'HDD' | 'SSD' | 'NVMe';
+type VpsPlan = {
+  name: string;
+  cpu: string;
+  ram: string;
+  storage: string;
+  prices: Record<StorageType, number>;
+};
+
+const VPS_PLANS: VpsPlan[] = [
+  { name: '«Спутник 2.0»',  cpu: '1 vCPU', ram: '1 Гб ОЗУ',  storage: '20 Гб',  prices: { HDD: 200,  SSD: 270,  NVMe: 350  } },
+  { name: '«Восток 2.0»',   cpu: '1 vCPU', ram: '2 Гб ОЗУ',  storage: '50 Гб',  prices: { HDD: 310,  SSD: 400,  NVMe: 510  } },
+  { name: '«Восход 2.0»',   cpu: '2 vCPU', ram: '4 Гб ОЗУ',  storage: '70 Гб',  prices: { HDD: 470,  SSD: 590,  NVMe: 750  } },
+  { name: '«Союз 2.0»',     cpu: '4 vCPU', ram: '8 Гб ОЗУ',  storage: '100 Гб', prices: { HDD: 700,  SSD: 880,  NVMe: 1100 } },
+  { name: '«Ангара 2.0»',   cpu: '8 vCPU', ram: '12 Гб ОЗУ', storage: '150 Гб', prices: { HDD: 1200, SSD: 1500, NVMe: 1900 } },
+];
+
+const DEDICATED_PLANS = [
+  { name: '«Циолковский»', cpu: 'AMD Ryzen 9 5950X', cores: '16 CPU', ram: '128 Гб ОЗУ', storage: '1000 Гб NVMe', price: 11000 },
 ];
 
 type Part = { id: string; name: string; price: number };
@@ -55,6 +70,7 @@ const CATEGORIES: Category[] = [
 ];
 
 const Index = () => {
+  const [storageType, setStorageType] = useState<StorageType>('HDD');
   const [selected, setSelected] = useState<Record<string, string>>(
     Object.fromEntries(CATEGORIES.map((c) => [c.key, c.options[0].id]))
   );
@@ -140,33 +156,83 @@ const Index = () => {
       {/* Pricing */}
       <section id="pricing" className="container py-24">
         <SectionTitle tag="// ТАРИФЫ" title="Аренда мощностей" />
-        <div className="grid md:grid-cols-3 gap-6 mt-12">
-          {PRICING.map((p, i) => (
-            <div
-              key={p.name}
-              className={`card-tech rounded-2xl p-8 relative animate-float-up ${p.popular ? 'border-neon-magenta/60 glow-magenta' : ''}`}
-              style={{ animationDelay: `${i * 0.1}s` }}
+        <p className="text-center text-muted-foreground max-w-2xl mx-auto mt-4 text-sm">
+          Процессоры Intel Xeon и AMD Ryzen 3–4,5 ГГц. Канал до 100 Мбит/с и один IP-адрес бесплатно. Возможны уникальные конфигурации под ваши требования.
+        </p>
+
+        {/* VPS */}
+        <h3 className="font-display font-bold text-lg text-neon-cyan mt-14 mb-2 uppercase tracking-widest">VPS тарифы</h3>
+
+        {/* Storage toggle */}
+        <div className="flex items-center gap-2 mb-6">
+          <span className="text-xs font-mono text-muted-foreground mr-2">Тип накопителя:</span>
+          {(['HDD', 'SSD', 'NVMe'] as StorageType[]).map((t) => (
+            <button
+              key={t}
+              onClick={() => setStorageType(t)}
+              className={`px-4 py-1.5 rounded-lg text-xs font-mono font-bold border transition-all ${
+                storageType === t
+                  ? 'bg-neon-cyan/20 border-neon-cyan text-neon-cyan glow-cyan'
+                  : 'border-border text-muted-foreground hover:border-neon-cyan/40'
+              }`}
             >
-              {p.popular && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-neon-magenta text-background text-xs font-mono font-bold">
-                  ПОПУЛЯРНЫЙ
-                </span>
-              )}
-              <h3 className={`font-display font-black text-xl mb-1 ${p.accent === 'magenta' ? 'text-neon-magenta' : 'text-neon-cyan'}`}>{p.name}</h3>
-              <div className="flex items-end gap-1 mb-6 mt-4">
-                <span className="font-display font-black text-4xl">{p.price}</span>
-                <span className="text-muted-foreground font-mono text-sm mb-1">₽/мес</span>
-              </div>
-              <ul className="space-y-3 mb-8">
-                {p.features.map((f) => (
-                  <li key={f} className="flex items-center gap-2 text-sm">
-                    <Icon name="Check" size={16} className={p.accent === 'magenta' ? 'text-neon-magenta' : 'text-neon-cyan'} />
-                    {f}
+              {t}
+            </button>
+          ))}
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+          {VPS_PLANS.map((p, i) => (
+            <div key={p.name} className="card-tech rounded-2xl p-6 flex flex-col animate-float-up" style={{ animationDelay: `${i * 0.07}s` }}>
+              <h4 className="font-display font-bold text-sm text-neon-cyan mb-4 leading-snug">{p.name}</h4>
+              <ul className="space-y-2 mb-5 flex-1">
+                {[
+                  { icon: 'Cpu', val: p.cpu },
+                  { icon: 'MemoryStick', val: p.ram },
+                  { icon: 'HardDrive', val: `${p.storage} ${storageType}` },
+                ].map((r) => (
+                  <li key={r.val} className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <Icon name={r.icon} size={13} className="text-neon-cyan/60 shrink-0" />
+                    {r.val}
                   </li>
                 ))}
               </ul>
-              <Button className={`w-full font-mono font-bold ${p.popular ? 'bg-neon-magenta text-background hover:bg-neon-magenta/90' : 'bg-secondary hover:bg-secondary/80'}`}>
-                Выбрать
+              <div className="mb-4">
+                <div className="font-display font-black text-2xl gradient-text">от {p.prices[storageType].toLocaleString('ru-RU')}</div>
+                <div className="text-xs font-mono text-muted-foreground">₽/месяц</div>
+              </div>
+              <Button className="w-full font-mono font-bold text-xs bg-secondary hover:bg-neon-cyan/20 hover:border-neon-cyan border border-border transition-all">
+                Заказать
+              </Button>
+            </div>
+          ))}
+        </div>
+
+        {/* Dedicated */}
+        <h3 className="font-display font-bold text-lg text-neon-magenta mt-14 mb-6 uppercase tracking-widest">Выделенные серверы</h3>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {DEDICATED_PLANS.map((p, i) => (
+            <div key={p.name} className="card-tech rounded-2xl p-7 border-neon-magenta/30 animate-float-up" style={{ animationDelay: `${i * 0.1}s` }}>
+              <h4 className="font-display font-bold text-base text-neon-magenta mb-4">{p.name}</h4>
+              <ul className="space-y-2 mb-5">
+                {[
+                  { icon: 'Cpu', val: p.cpu },
+                  { icon: 'Server', val: p.cores },
+                  { icon: 'MemoryStick', val: p.ram },
+                  { icon: 'HardDrive', val: p.storage },
+                ].map((r) => (
+                  <li key={r.val} className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Icon name={r.icon} size={15} className="text-neon-magenta/60 shrink-0" />
+                    {r.val}
+                  </li>
+                ))}
+              </ul>
+              <div className="mb-5">
+                <div className="font-display font-black text-3xl text-neon-magenta">от {p.price.toLocaleString('ru-RU')}</div>
+                <div className="text-xs font-mono text-muted-foreground">₽/месяц</div>
+              </div>
+              <Button className="w-full font-mono font-bold bg-neon-magenta text-background hover:bg-neon-magenta/90 glow-magenta">
+                Заказать
               </Button>
             </div>
           ))}
